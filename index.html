@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AssignmentNumberFive</title>
+</head>
+
+<body style="text-align: center;"> 
+      
+    <h1 style="color: #C38126;"> Lucky For Life Game </h1> 
+ 
+    <form id="forms" class="" action="index.html" method="post"> 
+		<h2> Please enter the first five winning numbers: </h2>
+		<br> 
+       	<input type="text" name="array[]" value="" /><br> 
+        <input type="text" name="array[]" value="" /><br> 
+        <input type="text" name="array[]" value="" /><br> 
+        <input type="text" name="array[]" value="" /><br> 
+        <input type="text" name="array[]" value="" /><br> 
+		<br>
+		<h3> Please enter the Lucky Number</h3>
+		<input type="text" name="number" value="" /><br>
+    </form> 
+
+	<br>
+    <br> 
+	<button type="button" name="button" onclick="printFollow()"> Submit </button> 	
+ 
+	
+    <script type="text/javascript"> 
+		
+		//-----------------------start of random 5 numbers computed 
+		var chosen = [];
+		var luckyNumber;
+		
+	
+		for(var i = 0; i < 5; i++) {
+			chosen[i] = Math.floor(Math.random()* 48 );
+		}
+		
+		luckyNumber = Math.floor(Math.random()*18);
+		
+		//-----------------------end of random 5 numbers computed
+		
+		
+		
+        var statement1 = "The User's respective guesses are : "; 
+		var statement2 = "The User's Lucky guess is: ";
+		
+		
+		//function to calculate total prize money 
+		function calculatePayout(numOfMatches, Lucky){
+			
+			var prizeAmount = 0;
+			
+			if (numOfMatches == 5 && Lucky == 1){
+				prizeAmount = 7000;
+			} else if(numOfMatches == 5 && Luck != 1){
+				prizeAmount = 25000;
+			} else if(numOfMatches==4 && Lucky == 1){
+				prizeAmount = 5000;
+			} else if(numOfMatches==4 && Luck != 1){
+				prizeAmount = 200;
+			} else if(numOfMatches==3 && Lucky == 1){
+				prizeAmount = 150;
+			} else if(numOfMatches==3 && Lucky != 1) {
+				prizeAmount = 20;
+			} else if(numOfMatches==2 && Lucky == 1) {
+				prizeAmount = 25;				
+			} else if(numOfMatches==2 && Lucky != 1) {
+				prizeAmount = 3;
+			} else if(numOfMatches==1 && Lucky == 1){
+				prizeAmount = 6;
+			} else if(numOfMatches==0 && Lucky == 1){
+				prizeAmount = 4;
+			}
+			
+			return prizeAmount;
+		}
+		//function associated with the submit button 
+        function printFollow() { 
+			//find elements
+            var input = document.getElementsByName('array[]'); 
+			var inputtwo = document.getElementsByName('number');
+			var output = [];
+			var finalResult = [];
+			//populate the array (User guesses)
+			for (var i = 0; i < 5; i++) {
+				//place each value as a number 
+				output[i]= input[i].value;
+				//sort numbers into ascending order
+				output =output.sort(function(a,b) {
+					return a-b;
+				});
+				
+			} 
+			statement1 = statement1  + " " + output+ " " ;
+			
+			
+  			//populate the lucky number (user guess)
+			for(var i=0; i<inputtwo.length;i++){
+				var b = inputtwo[i];
+				statement2 = statement2 + b.value + " "; 
+			}
+			
+			var CorrectLuckyNum = 0;
+			var matches = 0;
+			//counting the number correct guesses
+			for(var i=0; i<5;i++){
+				if(luckyNumber == inputtwo.value){
+					CorrectLuckyNum = 1;
+				}
+				for(var j=0; j<5;j++){
+					if(chosen[i] == input[j].value){
+						matches = matches +1;
+						break;
+					}
+				}
+			}
+			
+			document.write("The Winning Numbers: " + "<br>");
+			for(var i = 0; i < 5; i++) {
+			//print statement of winning numbers 
+				document.write(chosen[i] + "<br>");
+			}
+			//print statement of Lucky Number
+			document.write("The Lucky Ball Number is: " + "<br>" + luckyNumber);
+			document.write("<br>");
+			document.write("<br>");
+			document.write("<br>");
+			
+			if (matches == undefined){
+				document.write("The number of matched numbers: 0" + "<br>");
+			}
+			else{
+				document.write("The number of matched numbers: " + matches + "<br>");
+			}
+			
+			if(CorrectLuckyNum == 1){
+				document.write("Lucky Ball Number Matched: YES");
+			}
+			else{
+				document.write("Lucky Ball Number Matched: NO");
+			}
+			
+			document.write("<br>");
+			//print out the array values guesses
+            document.write(statement1 + "<br>"); 
+			//print out the lucky number guess
+            document.write(statement2 + "<br>"); 
+			
+			//---------Calculate payout--------------
+			var money = calculatePayout(matches, CorrectLuckyNum);
+			
+			document.write("<br>" + "PRIZE AMOUNT:");
+			
+			if(money==7000){
+				document.write( "$" +money + " a WEEK for LIFE");
+			}else if(money==25000){
+				document.write("$" +money + " a YEAR for LIFE");
+			} else {
+				document.write ("$" + money + " ");
+			}
+		}
+		
+		
+		
+		
+    </script> 
+</body> 
+</html>
